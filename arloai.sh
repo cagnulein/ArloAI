@@ -8,7 +8,6 @@ fi
 trap "rm -f ${LOCKFILE}; exit" INT TERM EXIT
 echo $$ > ${LOCKFILE}
 
-# do stuff
-sleep 1000
+python3 arloai.py
 
 rm -f ${LOCKFILE}
