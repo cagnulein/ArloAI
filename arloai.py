@@ -140,7 +140,7 @@ try:
 
 			print(os.path.join(execution_path , 'videos/'+videofilename))
 			startProcTime = time.time()
-			detections = detector.detectObjectsFromVideo(input_file_path=os.path.join(execution_path , 'videos/'+videofilename), frames_per_second=25, minimum_percentage_probability=30, save_detected_video=False, video_complete_function=forSeconds )
+			detections = detector.detectObjectsFromVideo(input_file_path=os.path.join(execution_path , 'videos/'+videofilename), frames_per_second=25, minimum_percentage_probability=50, save_detected_video=False, video_complete_function=forSeconds )
 
 except Exception as e:
     print(e)
