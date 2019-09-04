@@ -10,6 +10,9 @@ import os
 from arlo import Arlo
 import pytz
 import time
+import cv2
+from PIL import Image
+import numpy as np
 tz = pytz.timezone('Europe/Rome')
 
 from datetime import timedelta, date
@@ -42,6 +45,20 @@ def detectionSpeedToString(value):
 		return "fastest"
 	elif(value==4):
 		return "flash"
+
+def forFrame(frame_number, output_array, output_count, returned_frame):
+    global datevideo
+    counter = 0
+
+    for eachItem in output_count:
+        if(eachItem=="person"):
+           try:
+              name = "people/" + datevideo
+              name += str(frame_number) + ".jpg"
+              cv2.imwrite(name, returned_frame)
+           except Exception as e:
+              print(e)
+           return
 
 def forSeconds(output_arrays, count_arrays, average_output_count):
 	global datevideo
@@ -140,7 +157,7 @@ try:
 
 			print(os.path.join(execution_path , 'videos/'+videofilename))
 			startProcTime = time.time()
-			detections = detector.detectObjectsFromVideo(input_file_path=os.path.join(execution_path , 'videos/'+videofilename), frames_per_second=25, minimum_percentage_probability=50, save_detected_video=False, video_complete_function=forSeconds )
+			detections = detector.detectObjectsFromVideo(input_file_path=os.path.join(execution_path , 'videos/'+videofilename), frames_per_second=25, frame_detection_interval=12,  minimum_percentage_probability=72, save_detected_video=False, video_complete_function=forSeconds, per_frame_function=forFrame, return_detected_frame=True )
 
 except Exception as e:
     print(e)
